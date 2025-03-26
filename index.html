@@ -907,19 +907,21 @@
                 transform: scale(1.1) rotate(10deg); /* Keep hover effect */
             }
             .timeline-content {
-    text-align: center; /* Center the content */
-    padding: 0 1rem; /* Add horizontal padding */
-    display: flex; /* Use flexbox for centering */
-    flex-direction: column; /* Stack title and description vertically */
-    align-items: center; /* Center items horizontally */
+    text-align: center;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-            .timeline-content h3 {
-                font-size: 1.3rem; /* Slightly smaller for mobile */
-                margin-bottom: 0.75rem; /* More spacing below title */
-            }
-            .timeline-content p {
-                font-size: 0.95rem; /* Slightly smaller for readability */
-            }
+.timeline-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+.timeline-content p {
+    font-size: 0.95rem;
+    max-width: 100%; /* Ensure it doesn’t exceed container */
+    text-align: center; /* Explicitly center multi-line text */
+}
         }
     </style>
 </head>
