@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Sign with Any DMS | Tap to Sign</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/preact/10.18.1/preact.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #34D399;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --signup-btn: linear-gradient(135deg, #4A90E2 0%, #A3BFFA 100%);
+            --review-bg: #F9FAFB;
+            --faq-bg: #F3F4F6;
+            --dropdown-bg: #FFFFFF;
+            --dropdown-hover: #F1F5F9;
+            --feature-bg: #F6F9FC;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background-color: #FFFFFF;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f6f9fc 0%, #ffffff 100%);
+            padding: 4rem 0;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            max-height: 600px;
+            margin: 0 auto;
+            margin-top: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 9 / 16;
+            border: 1px solid var(--border);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: #ffffff;
+        }
+
+        .cta-button {
+            background: var(--signup-btn);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.2);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(74, 144, 226, 0.3);
+            color: white;
+        }
+
+        .navbar {
+            background: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            line-height: 1;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover .navbar-logo {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .dropdown-menu {
+            background: var(--dropdown-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+            min-width: 200px;
+        }
+
+        .dropdown-item {
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: var(--dropdown-hover);
+            color: var(--primary);
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: var(--border);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .timeline-item:hover .timeline-icon {
+            transform: translateX(-50%) scale(1.1) rotate(10deg);
+        }
+
+        .timeline-item.left .timeline-content {
+            width: 45%;
+            margin-right: 55%;
+            text-align: right;
+        }
+
+        .timeline-item.right .timeline-content {
+            width: 45%;
+            margin-left: 55%;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            font-size: 1rem;
+        }
+
+        .how-it-works-card {
+            background: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .how-it-works-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        #how-it-works .row > div:nth-child(1) .how-it-works-card {
+            background: url('images/step1.webp') center/cover no-repeat;
+        }
+
+        #how-it-works .row > div:nth-child(2) .how-it-works-card {
+            background: url('images/step2.webp') center/cover no-repeat;
+        }
+
+        #how-it-works .row > div:nth-child(3) .how-it-works-card {
+            background: url('images/step3.webp') center/cover no-repeat;
+        }
+
+        .how-it-works-card p {
+            color: var(--text-primary);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size: 1.2rem;
+        }
+
+        .calendly-overlay {
+            z-index: 10000 !important;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .calendly-popup {
+            z-index: 10001 !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            max-height: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .calendly-popup-content {
+            height: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        .calendly-close-overlay {
+            z-index: 10002 !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .calendly-popup-close {
+            z-index: 10003 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: absolute !important;
+            top: 10px !important;
+            right: 10px !important;
+            width: 40px !important;
+            height: 40px !important;
+            background: #fff !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            color: #000 !important;
+        }
+
+        .calendly-popup-close i {
+            font-size: 20px !important;
+        }
+
+        .calendly-popup-close:hover {
+            background: var(--primary) !important;
+            color: #fff !important;
+        }
+
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pricing-box {
+            background: linear-gradient(135deg, #fff 0%, #f9fafc 100%);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .pricing-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-box .desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .pricing-box h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .pricing-box .price {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .pricing-box .price span.text-muted {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+        }
+
+        .pricing-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .pricing-box ul li {
+            margin-bottom: 0.4rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .pricing-box ul li:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .pricing-box .pricing-cta {
+            background: var(--signup-btn);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .pricing-box .pricing-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .reviews-wall {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .review-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .review-item.animate-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .review-card {
+            background: var(--review-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-front p {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-style: italic;
+            margin: 0 0 1rem 0;
+            line-height: 1.6;
+        }
+
+        .review-front strong {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+
+
+        .faq-answer {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: none;
+            background: #fafafa;
+            line-height: 1.6;
+            margin-left: 1rem;
+            border-left: 2px solid var(--primary);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item i {
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+
+        .faq-item.active i {
+            transform: rotate(180deg);
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .sales-info {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .sales-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .sales-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sales-info p {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .sales-name {
+            font-size: 1.75rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .sales-email {
+            position: relative;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .sales-email::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .sales-email:hover::after {
+            width: 100%;
+        }
+
+        .sales-email:hover {
+            color: var(--primary);
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-control.is-invalid {
+            border-color: var(--error);
+        }
+
+        .invalid-feedback {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        footer {
+            background: #f8fafc;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .btn-primary {
+            background: var(--signup-btn);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
+            color: white;
+        }
+
+        .btn-trial {
+            background: var(--signup-btn);
+            color: white;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.2);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-trial:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(74, 144, 226, 0.3);
+            color: white;
+        }
+
+        .feature-page {
+    background: #FDFCFA; /* Soft beige */
+    min-height: 100vh;
+    color: #2D3748; /* Dark slate */
+    font-family: 'Inter', sans-serif;
+}
+
+/* Hero Section */
+.feature-hero {
+    padding: 6rem 0 4rem;
+    background: linear-gradient(to bottom right, #E6F0FA 0%, #B2E0E6 100%); /* Light blue gradient */
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.hero-text {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2C5282; /* Teal blue */
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    color: #4A5568; /* Gray */
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+.hero-icon {
+    font-size: 3.5rem;
+    color: #3182CE; /* Bright teal */
+    margin-top: 1rem;
+    opacity: 0.9;
+}
+
+/* Breakdown Section */
+.feature-breakdown {
+    padding: 4rem 0;
+}
+
+.breakdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Text: 1 part, images: 1.5 parts */
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: center; /* Center the entire right column vertically */
+}
+
+.breakdown-text {
+    padding: 1rem;
+}
+
+.breakdown-section {
+    margin-bottom: 2.5rem;
+}
+
+.breakdown-section h2 {
+    font-size: 1.8rem;
+    color: #2C5282;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.breakdown-section p, .breakdown-section ul {
+    font-size: 1.1rem;
+    color: #4A5568;
+    line-height: 1.7;
+}
+
+.breakdown-section ul li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.breakdown-section ul li:before {
+    content: '\f058'; /* Checkmark circle from Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #3182CE;
+    position: absolute;
+    left: 0;
+}
+
+.breakdown-image {
+    display: flex;
+    flex-direction: column; /* Stack images vertically */
+    gap: 2rem; /* Space between images */
+    justify-content: center; /* Center images within this container */
+    align-items: center; /* Center images horizontally within this container */
+    height: 100%; /* Ensure it fills the grid cell height for centering */
+}
+
+/* No change below */
+.breakdown-img {
+    width: 100%;
+    max-width: 600px; /* Wide as before */
+    height: auto; /* Natural height, no stretching */
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+/* Highlights Section */
+.feature-highlights {
+    padding: 4rem 0;
+    background: #F7FAFC; /* Light gray */
+}
+
+.highlights-title {
+    font-size: 2rem;
+    color: #2C5282;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.highlight-item {
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.highlight-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.highlight-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+/* CTA Section */
+.feature-cta {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.cta-btn {
+    background: #3182CE;
+    color: #FFFFFF;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+.cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(49, 130, 206, 0.5);
+}
+
+/* Animations */
+.animate-fade {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .feature-hero {
+        padding: 4rem 0 3rem;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    .hero-icon {
+        font-size: 2.5rem;
+    }
+    .breakdown-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        gap: 2rem;
+        align-items: start; /* Reset to start on mobile for stacking */
+    }
+    .breakdown-image {
+        margin-top: 2rem;
+        gap: 1.5rem; /* Slightly smaller gap on mobile */
+        justify-content: center;
+        height: auto; /* Natural height on mobile */
+    }
+    .breakdown-img {
+        max-width: 100%; /* Full width on mobile */
+        height: auto;
+    }
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+    .cta-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div id="app"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <script>
+        const { h, render, Component } = preact;
+
+        const currentYear = new Date().getFullYear();
+            const pricingPlans = [
+                { name: "15 car inventory", desc: "Up to", price: "$299", features: ["Unlimited E-Signs", "Unlimited Users", "Unlimited Forms", "Unlimited Cloud Storage", "Month-to-Month, pay as you go"] },
+                { name: "50 car inventory", desc: "Up to", price: "$399", features: ["Unlimited E-Signs", "Unlimited Users", "Unlimited Forms", "Unlimited Cloud Storage", "Month-to-Month, pay as you go"] },
+                { name: "100 car inventory", desc: "Up to", price: "$599", features: ["Unlimited E-Signs", "Unlimited Users", "Unlimited Forms", "Unlimited Cloud Storage", "Month-to-Month, pay as you go"] },
+                { name: "150 car inventory", desc: "Up to", price: "$799", features: ["Unlimited E-Signs", "Unlimited Users", "Unlimited Forms", "Unlimited Cloud Storage", "Month-to-Month, pay as you go"] },
+                { name: "200 car inventory", desc: "Up to", price: "$999", features: ["Unlimited E-Signs", "Unlimited Users", "Unlimited Forms", "Unlimited Cloud Storage", "Month-to-Month, pay as you go"] },
+                { name: "200 car inventory", desc: "Over", price: "$100 per 50 cars", features: ["Unlimited E-Signs", "Unlimited Users", "Unlimited Forms", "Unlimited Cloud Storage", "Month-to-Month, pay as you go"] }
+            ];
+            const reviews = [
+                { quote: "Oh I like this, this is easy!...that's the best!...that's the fastest I've gone through paperwork...It's like magic!", author: "Happy Car Buyer" },
+                { quote: "How tricky is that! This is so cool...I am amazed by all this stuff; the old days it would take forever to fill this stuff out! That is amazing!", author: "Happy Car Buyer" },
+                { quote: "Just tap it?! Goodness you make this too easy! Buy a car in 15 minutes", author: "Happy Car Buyer" },
+                { quote: "Better than all the paper!", author: "Happy Car Buyer" },
+                { quote: "Man this is the easiest signing I've ever had", author: "Happy Car Buyer" },
+                { quote: "Wow that's good...that's efficient...can't get better than that!", author: "Happy Car Buyer" },
+                { quote: "That was the fastest signing I've ever done in my entire life. I'm shocked. I don't know what to say.", author: "F & I Manager" },
+                { quote: "This is the easiest thing ever! I've never had it that easy!", author: "Happy Car Buyer" },
+                { quote: "That was like the fastest thing I’ve ever been through in the history of car buying", author: "Happy Car Buyer" },
+                { quote: "Fastest Signing Thingy Ever! …Oh yeah, this is amazing, thought I was going to be here for hours.", author: "Happy Car Buyer" },
+                { quote: "This makes things so much easier! Why don’t more dealers do it like this?", author: "Happy Car Buyer" },
+                { quote: "That was the simplest thing I’ve ever seen. I loved it. Easiest time I’ve ever had buying a car, and the shortest amount of time.", author: "Happy Car Buyer" },
+                { quote: "It’s the easiest deal I’ve ever done!", author: "Happy Car Buyer" },
+                { quote: "Changed my view of the whole experience", author: "Happy Car Buyer" }
+            ];
+            const faqs = [
+                { question: "What DMS System does it work with?", answer: "Just about any, including Frazer, DealerCenter, DealerTrack, DeskManager, IDMS, Auto/Mate, AutoSoft, DealerBuilt LightYear, and many others. If it can print forms, we can integrate." },
+                { question: "How long does it take to install?", answer: "About 15 minutes and you'll be ready to go!" },
+                { question: "Can I add my own forms that are not in my DMS?", answer: "Of course! Add as many forms as you like!" },
+                { question: "What about GAP and Warranty and Back End Product?", answer: "Yes! You can “print” to our Tap to Sign server printer and the files magically appear in your deal! Any PDF can be e-signed!" },
+                { question: "What devices does it work with?", answer: "In-person it works really well with an iPad because we have an app designed specifically for iPad. A notification pops up on the iPad and you are good to go! It also works on any Phone, Tablet, or Computer!" },
+                { 
+                    question: "Is it compliant with Federal E-Sign Act?", 
+                    answer: "As per the Federal Electronic Signatures in Global and National Commerce Act (ESIGN) of 2000, a signature or record in electronic form cannot be denied legal effect, validity, or enforceability solely because it is in electronic form. Our e-sign software provides a secure, reliable, and efficient way for dealerships to use electronic signatures in their transactions and complies with the requirements of the Federal E-Sign Act & the UETA including:\n\n- **Consent**: Tap to Sign allows parties to give their consent to use electronic signatures and records in their transactions via the use of an E-Sign Consent page.\n- **Record retention & accessibility**: Our software ensures that electronic records are retained in a secure and tamper-proof manner, allowing for accurate reproduction for later reference by all parties involved in a transaction.\n- **Authentication**: Our software provides reliable and enforceable electronic signatures by capturing the customer's original signature through the use of an electronic signature pad.\n- **Attribution**: Electronic signatures are attributed to the person who signed them as logged on the Certificate of Completion, providing a clear record of who signed what and when.\n- **Compliance with Truth-in-Lending**: Per 12 CFR Part 1026 - Truth in Lending (Regulation Z), the Truth in Lending disclosures can be made electronically." 
+                }
+            ];
+
+    const renderMainPage = () => {
+    console.log('Starting renderMainPage');
+    const nav=document.getElementById('navbar');
+    const app = document.getElementById('app');
+    if (!app) {
+        console.error('App container not found!');
+        return;
+    }
+    console.log('App container found, clearing content');
+    app.innerHTML = '';
+    try {
+        console.log('Rendering MainPage');
+        render(h(Navbar),nav)
+        render(h(MainPage), app);
+        console.log('Render completed successfully');
+    } catch (error) {
+        console.error('Error during render:', error);
+    }
+    console.log('Attaching scroll animations');
+    attachScrollAnimations();
+    console.log('Scrolling to top');
+    window.scrollTo(0, 0);
+};
+
+
+        const renderFeaturePage = (feature) => {
+    console.log('Starting renderFeaturePage for:', feature.title);
+    const app = document.getElementById('app');
+    if (!app) {
+        console.error('App container not found!');
+        return2
+    }
+    console.log('App container found, clearing content');
+    
+    try {
+        console.log('Rendering FeaturePage with feature:', feature);
+        render(h(FeaturePage, { feature }), app);
+        console.log('Render completed successfully');
+    } catch (error) {
+        console.error('Error during render:', error);
+    }
+    console.log('Attaching scroll animations');
+    attachScrollAnimations();
+    console.log('Scrolling to top');
+    window.scrollTo(0, 0);
+};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded');
+            if (typeof Calendly !== 'undefined') console.log('Calendly script loaded');
+        });
+
+        class VideoPlayer extends Component {
+            constructor(props) {
+                super(props);
+                this.state = { isPlaying: false };
+                this.togglePlay = this.togglePlay.bind(this);
+            }
+
+            togglePlay() {
+                const video = document.querySelector('video');
+                if (video) {
+                    if (this.state.isPlaying) video.pause();
+                    else video.play();
+                    this.setState({ isPlaying: !this.state.isPlaying });
+                }
+            }
+
+            render() {
+                return h('div', {
+                    className: 'play-button',
+                    onClick: this.togglePlay,
+                    style: { display: this.state.isPlaying ? 'none' : 'flex' }
+                }, h('i', { className: 'fas fa-play fa-2x text-primary' }));
+            }
+        }
+
+
+        class ContactForm extends Component {
+            constructor(props) {
+                super(props);
+                this.state = { 
+                    name: '', 
+                    contact: '', 
+                    message: '',
+                    errors: { name: '', contact: '', message: '' }
+                };
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(e) {
+                this.setState({ [e.target.name]: e.target.value });
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                const errors = {};
+                if (!this.state.name) errors.name = 'Name is required';
+                if (!this.state.contact) errors.contact = 'Contact is required';
+                if (!this.state.message) errors.message = 'Message is required';
+
+                if (Object.keys(errors).length > 0) {
+                    this.setState({ errors });
+                    return;
+                }
+
+                const payload = {
+                    ContactName: this.state.name,
+                    ContactEmailPhone: this.state.contact,
+                    MessageBody: this.state.message
+                };
+                try {
+                    const response = await fetch('/contactUs', {
+                        method: 'POST',
+                        body: JSON.stringify(payload),
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const res = await response.json();
+                    if (res.status === 200) {
+                        this.setState({ name: '', contact: '', message: '', errors: {} });
+                    } else {
+                        this.setState({ errors: { message: 'Failed to send message' } });
+                    }
+                } catch (error) {
+                    this.setState({ errors: { message: 'Error sending message' } });
+                }
+            }
+
+            render() {
+                return h('form', { onSubmit: this.handleSubmit },
+                    h('div', { className: 'mb-3' },
+                        h('input', { 
+                            type: 'text', 
+                            className: `form-control ${this.state.errors.name ? 'is-invalid' : ''}`, 
+                            name: 'name', 
+                            placeholder: 'Your Name', 
+                            value: this.state.name, 
+                            onChange: this.handleChange 
+                        }),
+                        this.state.errors.name && h('div', { className: 'invalid-feedback' }, this.state.errors.name)
+                    ),
+                    h('div', { className: 'mb-3' },
+                        h('input', { 
+                            type: 'text', 
+                            className: `form-control ${this.state.errors.contact ? 'is-invalid' : ''}`, 
+                            name: 'contact', 
+                            placeholder: 'Email', 
+                            value: this.state.contact, 
+                            onChange: this.handleChange 
+                        }),
+                        this.state.errors.contact && h('div', { className: 'invalid-feedback' }, this.state.errors.contact)
+                    ),
+                    h('div', { className: 'mb-3' },
+                        h('textarea', { 
+                            className: `form-control ${this.state.errors.message ? 'is-invalid' : ''}`, 
+                            name: 'message', 
+                            rows: '5', 
+                            placeholder: 'Your Message', 
+                            value: this.state.message, 
+                            onChange: this.handleChange 
+                        }),
+                        this.state.errors.message && h('div', { className: 'invalid-feedback' }, this.state.errors.message)
+                    ),
+                    h('button', { type: 'submit', className: 'btn btn-primary w-100 rounded-pill' }, 'Send Message')
+                );
+            }
+        }
+
+        const features = [
+            { 
+                id: 'dms-compatibility', 
+                title: 'DMS Compatibility', 
+                icon: 'fas fa-sync-alt', 
+                shortDesc: 'Our software seamlessly integrates with both web-based and desktop-based Dealer Management Systems (DMS).', 
+                fullDesc: 'Tap to Sign revolutionizes dealership workflows by integrating seamlessly with any Dealer Management System (DMS). Whether you’re using a web-based platform like DealerTrack or a desktop solution like Frazer, our virtual server printer captures forms directly from your DMS. This eliminates manual uploads and ensures your documents are ready for e-signing instantly. Compatible with systems like Auto/Mate, DealerCenter, and more, Tap to Sign adapts to your existing setup, making it a plug-and-play solution for modern dealerships.',
+                benefits: [
+                    'Works with any DMS that can print forms',
+                    'No need to change your current workflow',
+                    'Instant form availability for signing',
+                    'Supports both web and desktop systems'
+                ],
+                howItWorks: 'Install our virtual printer driver on your system, connect it to your DMS, and “print” your forms as usual. The documents are automatically routed to Tap to Sign’s secure server, where they’re converted into e-signable PDFs in real-time. Your team can then send them to customers or sign them in-person—no extra steps required.',
+                images: [
+                    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            { 
+                id: 'e-sign-seconds', 
+                title: 'E-Sign in Seconds', 
+                icon: 'fas fa-bolt', 
+                shortDesc: 'Impress your customers with the speed of our signing process.', 
+                fullDesc: 'In the fast-paced automotive industry, time is money. Tap to Sign’s lightning-fast e-signing process lets customers complete contracts in seconds—literally. With an intuitive interface, customers tap to review, sign with a finger or stylus, and finalize deals faster than ever. This speed not only impresses buyers but also accelerates your sales cycle, letting you close more deals in less time. Say goodbye to the days of lengthy paperwork sessions and hello to a streamlined, modern signing experience.',
+                benefits: [
+                    'Signs documents in under 10 seconds',
+                    'Reduces customer wait times',
+                    'Boosts dealership efficiency',
+                    'Enhances customer satisfaction'
+                ],
+                howItWorks: 'Once a form is ready in Tap to Sign, customers receive a link or access it via our iPad app. They tap to open, review the document in a clear, mobile-friendly view, and sign with a single gesture. The signed document is instantly saved and sent back to your DMS, completing the process in a flash.',
+                images: [
+                    'https://images.unsplash.com/photo-1556740738-6b4d8e4e6b9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            { 
+                id: 'in-person-remote', 
+                title: 'In-Person or Remote', 
+                icon: 'fas fa-globe', 
+                shortDesc: 'Your customers can sign in-person or from home.', 
+                fullDesc: 'Flexibility is the name of the game with Tap to Sign. Whether your customer is sitting across from you or miles away, our platform supports both in-person and remote signing with ease. In-person, our dedicated iPad app offers a smooth, guided experience—perfect for the showroom. Remotely, a secure link allows signing from any phone, tablet, or computer, no app required. This dual capability ensures you can close deals anytime, anywhere, meeting customers on their terms and expanding your reach.',
+                benefits: [
+                    'Supports in-person and remote workflows',
+                    'Optimized iPad app for showroom use',
+                    'No software needed for remote signing',
+                    'Increases deal-closing opportunities'
+                ],
+                howItWorks: 'For in-person signing, open the Tap to Sign app on your iPad, select the deal, and hand it to the customer—they sign right there. For remote signing, generate a secure link from our dashboard, send it via email or text, and the customer signs from their device. Both methods sync back to your system instantly.',
+                images: [
+                    'https://images.unsplash.com/photo-1593642634367-d91a5a4f8e42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            { 
+                id: 'dmv-compliant', 
+                title: 'DMV Compliant', 
+                icon: 'fas fa-check-circle', 
+                shortDesc: 'Complies with the Federal E-Sign Act and DMV standards.', 
+                fullDesc: 'Navigating legal requirements in the automotive world can be tricky, but Tap to Sign makes it simple. Our platform is fully compliant with the Federal E-Sign Act and DMV regulations across all 50 states. Every signature includes a consent page, a detailed authentication log, and a Certificate of Completion—ensuring your contracts are legally binding and audit-proof. From Truth-in-Lending disclosures to state-specific forms, we’ve got you covered, so you can focus on selling cars, not worrying about compliance.',
+                benefits: [
+                    'Meets Federal E-Sign Act standards',
+                    'DMV-compliant in all states',
+                    'Includes consent and audit trails',
+                    'Reduces legal risks for dealerships'
+                ],
+                howItWorks: 'Before signing, customers see an E-Sign Consent page they must accept. They then sign, and Tap to Sign generates a Certificate of Completion with a timestamp and IP log. All data is stored securely, meeting federal and state retention requirements, and is easily retrievable for audits.',
+                images: [
+                    'images/dmv-compliant.webp',
+                    'images/dmv-compliant.webp',
+                    'images/dmv-compliant.webp'
+                ]
+            },
+            { 
+                id: 'encrypted-cloud', 
+                title: 'Backed up & Encrypted', 
+                icon: 'fas fa-lock', 
+                shortDesc: 'Securely backed up and encrypted in the Cloud.', 
+                fullDesc: 'Data security is critical, and Tap to Sign delivers with industry-leading encryption and cloud storage. Every document is protected with 256-bit AES encryption—the same standard used by banks—and stored in a tamper-proof cloud environment. Automatic backups ensure you never lose a contract, while redundant servers guarantee uptime and accessibility. Whether it’s customer data or signed deals, your information stays safe, secure, and ready when you need it.',
+                benefits: [
+                    '256-bit AES encryption',
+                    'Automatic cloud backups',
+                    'Tamper-proof storage',
+                    'Always accessible for audits'
+                ],
+                howItWorks: 'When a document is signed, it’s encrypted on upload using 256-bit AES. It’s then stored in our secure cloud, with real-time backups across multiple servers. Access it anytime via our dashboard, with strict authentication ensuring only authorized users can view or download files.',
+                images: [
+                    'https://images.unsplash.com/photo-1563986768494-89797f2d9a88?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            { 
+                id: 'signature-capture', 
+                title: 'Authentic Signature Capture', 
+                icon: 'fas fa-pen', 
+                shortDesc: 'Captures hand-drawn signatures.', 
+                fullDesc: 'Nothing beats the personal touch of a handwritten signature, and Tap to Sign brings that to the digital world. Our advanced signature capture technology lets customers draw their signatures directly on-screen—whether on an iPad in-person or their own device remotely. Each signature is recorded with high precision, embedded into the document, and paired with a timestamp and IP log for authenticity. It’s as close to pen-on-paper as you can get, with all the benefits of digital efficiency.',
+                benefits: [
+                    'Hand-drawn signature precision',
+                    'Works on any touchscreen device',
+                    'Legally binding with logs',
+                    'Personalizes the signing experience'
+                ],
+                howItWorks: 'Customers open the document on a touchscreen device, tap the signature field, and draw their signature with a finger or stylus. The signature is captured in real-time, embedded into the PDF, and logged with metadata (time, IP, device) for legal enforceability.',
+                images: [
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1556740738-6b4d8e4e6b9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            { 
+                id: 'unlimited-use', 
+                title: 'Unlimited Use', 
+                icon: 'fas fa-infinity', 
+                shortDesc: 'Unlimited e-signatures, users, and forms.', 
+                fullDesc: 'Tap to Sign is built for growth. With unlimited e-signatures, users, and custom forms, you’re never boxed in by caps or extra fees. Add as many team members as you need, upload every form your dealership uses, and sign countless deals—all under one flat rate. This scalability makes Tap to Sign ideal for small independents and large multi-location dealerships alike, ensuring you can expand without worrying about hidden costs or restrictions.',
+                benefits: [
+                    'No limits on signatures',
+                    'Unlimited user accounts',
+                    'Add as many forms as needed',
+                    'Cost-effective for any size dealership'
+                ],
+                howItWorks: 'Log into the Tap to Sign dashboard, add users with a few clicks, and upload forms via drag-and-drop. Every action—signing, adding users, or creating forms—updates instantly across your account, with no quotas or additional charges.',
+                images: [
+                    'https://images.unsplash.com/photo-1556740738-6b4d8e4e6b9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]
+            }
+        ];
+        const Navbar = () => (
+            h('header', { className: 'navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm' },
+                h('div', { className: 'container' },
+                    h('a', { className: 'navbar-brand', href: '#', onclick: (e) => { e.preventDefault(); renderMainPage(); } },
+                        h('img', { src: 'images/logo.png', alt: 'Tap to Sign', className: 'navbar-logo' })
+                    ),
+                    h('button', { className: 'navbar-toggler', type: 'button', 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' },
+                        h('span', { className: 'navbar-toggler-icon' })
+                    ),
+                    h('div', { className: 'collapse navbar-collapse', id: 'navbarNav' },
+                        h('ul', { className: 'navbar-nav ms-auto' },
+                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#how-it-works' }, 'How It Works')),
+                            h('li', { className: 'nav-item dropdown' },
+                                h('a', { className: 'nav-link dropdown-toggle', href: '#', id: 'featuresDropdown', 'data-bs-toggle': 'dropdown' }, 'Features'),
+                                h('ul', { className: 'dropdown-menu' },
+                                    features.map(feature => (
+                                        h('li', {},
+                                        h('a', { 
+                                            className: 'dropdown-item', 
+                                            href: '#',
+                                            onclick: (e) => { 
+                                                e.preventDefault(); 
+                                                console.log(`Navigating to feature: ${feature.title}`); 
+                                                renderFeaturePage(feature); 
+                                            } 
+                                        }, feature.title)
+                                        )
+                                    ))
+                                )
+                            ),
+                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#pricing' }, 'Pricing')),
+                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#reviews' }, 'Reviews')),
+                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#faq' }, 'FAQ')),
+                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#contact' }, 'Contact')),
+                            h('li', { className: 'nav-item' }, h('a', { className: 'btn btn-outline-primary rounded-pill px-4 ms-3', href: '/login.html' }, 'Login')),
+                            h('li', { className: 'nav-item' }, h('a', { className: 'btn btn-primary rounded-pill px-4 ms-3', href: '/signup.html' }, 'Start Your 14-Day Free Trial'))
+                        )
+                    )
+                )
+            )
+        );
+
+        const FeaturePage = ({ feature }) => {
+    console.log('FeaturePage rendering with feature:', feature);
+    return h('div', { className: 'feature-page' },
+        h(Navbar),
+        h('section', { className: 'feature-hero' },
+            h('div', { className: 'hero-content container' },
+                h('div', { className: 'hero-text' },
+                    h('h1', { className: 'hero-title animate-fade' }, feature.title || 'No Title'),
+                    h('p', { className: 'hero-subtitle' }, feature.shortDesc || 'No Description'),
+                    h('i', { className: `${feature.icon} hero-icon` })
+                )
+            )
+        ),
+        h('section', { className: 'feature-breakdown container' },
+            h('div', { className: 'breakdown-grid' },
+                h('div', { className: 'breakdown-text' },
+                    h('div', { className: 'breakdown-section animate-fade' },
+                        h('h2', {}, 'Overview'),
+                        h('p', {}, feature.fullDesc || 'Learn how this feature enhances your workflow.')
+                    ),
+                    h('div', { className: 'breakdown-section animate-fade' },
+                        h('h2', {}, 'Key Benefits'),
+                        h('ul', {}, (feature.benefits || []).map(benefit => h('li', {}, benefit)))
+                    ),
+                    h('div', { className: 'breakdown-section animate-fade' },
+                        h('h2', {}, 'How It Works'),
+                        h('p', {}, feature.howItWorks || 'A simple, effective process.')
+                    )
+                ),
+                h('div', { className: 'breakdown-image' },
+                    feature.images && feature.images.length > 0 ? [
+                        h('img', { 
+                            src: feature.images[0], 
+                            alt: `${feature.title || 'Feature'} Highlight 1`, 
+                            className: 'breakdown-img'
+                        }),
+                        feature.images.length > 1 && h('img', { 
+                            src: feature.images[1], 
+                            alt: `${feature.title || 'Feature'} Highlight 2`, 
+                            className: 'breakdown-img'
+                        })
+                    ] : h('img', { 
+                        src: 'https://via.placeholder.com/400', 
+                        alt: 'Placeholder', 
+                        className: 'breakdown-img'
+                    })
+                )
+            )
+        ),
+        h('section', { className: 'feature-highlights container' },
+            h('h2', { className: 'highlights-title' }, 'Visual Highlights'),
+            h('div', { className: 'highlights-grid' },
+                (feature.images || []).slice(2).map((img, idx) => (
+                    h('div', { className: 'highlight-item' },
+                        h('img', { src: img, alt: `${feature.title || 'Feature'} ${idx + 3}`, className: 'highlight-img' })
+                    )
+                ))
+            )
+        ),
+        h('section', { className: 'feature-cta container' },
+            h('a', { href: '#', className: 'cta-btn', onclick: (e) => { e.preventDefault(); renderMainPage(); } }, 'Back to Home')
+        )
+    );
+};
+
+            
+        const MainPage = () => {
+            
+
+            return h('div', {},
+                
+                h('section', { className: 'hero-section animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('div', { className: 'row align-items-center' },
+                            h('div', { className: 'col-lg-6' },
+                                h('h1', { className: 'hero-title' }, 'E-Sign with Any DMS'),
+                                h('p', { className: 'lead mb-4' }, 'Streamline your dealership process with Tap to Sign. Sign documents quickly and securely from any device.'),
+                                h('div', { className: 'd-flex flex-wrap gap-3' },
+                                    h('a', {
+                                        href: 'javascript:void(0)',
+                                        className: 'cta-button',
+                                        onclick: (e) => {
+                                            e.preventDefault();
+                                            if (typeof Calendly !== 'undefined') {
+                                                Calendly.initPopupWidget({ url: 'https://calendly.com/kylebill/20min?hide_gdpr_banner=1&primary_color=4179ff' });
+                                                let closeBtn = document.querySelector('.calendly-popup-close');
+                                                        const popup = document.querySelector('.calendly-popup');
+                                                        if (!closeBtn && popup) {
+                                                            console.log('Adding custom close button');
+                                                            closeBtn = document.createElement('div');
+                                                            closeBtn.className = 'calendly-popup-close';
+                                                            popup.appendChild(closeBtn);
+                                                        }
+                                                        if (closeBtn) {
+                                                            console.log('Updating close button with icon');
+                                                            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                                                            closeBtn.onclick = () => {
+                                                                console.log('Close button clicked');
+                                                                Calendly.closePopupWidget();
+                                                            };
+                                                        }
+                                            } else {
+                                                console.error('Calendly not loaded');
+                                                alert('Scheduling widget is unavailable. Please try again later.');
+                                            }
+                                        }
+                                    }, 'Schedule Demo'),
+                                    h('a', { href: '/signup.html', className: 'btn-trial' }, '14-Day Free Trial')
+                                )
+                            ),
+                            h('div', { className: 'col-lg-6' },
+                                h('div', { className: 'video-container' },
+                                    h('video', { preload: 'metadata', controls: true },
+                                        h('source', { src: 'videos/Intro_to_Tap_to_Sign.mp4', type: 'video/mp4' })
+                                    ),
+                                    h(VideoPlayer)
+                                )
+                            )
+                        )
+                    )
+                ),
+                h('section', { id: 'how-it-works', className: 'py-5 animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('h2', { className: 'section-title' }, 'How It Works'),
+                        h('p', { className: 'section-subtitle' }, 'A simple three-step process to get you started'),
+                        h('div', { className: 'row g-4' },
+                            [
+                                { desc: 'Start from your DMS or print to file.' },
+                                { desc: 'Forms are ready for e-signing instantly.' },
+                                { desc: 'Customers sign once and tap to finish.' }
+                            ].map((step, idx) => (
+                                h('div', { className: 'col-md-4' },
+                                    h('div', { className: 'how-it-works-card' },
+                                        h('p', {}, step.desc)
+                                    )
+                                )
+                            ))
+                        )
+                    )
+                ),
+                h('section', { id: 'features', className: 'py-5 bg-light animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('h2', { className: 'section-title' }, 'Features'),
+                        h('p', { className: 'section-subtitle' }, 'Everything you need for seamless e-signing'),
+                        h('div', { className: 'timeline position-relative' },
+                            features.map((feature, idx) => (
+                                h('div', { className: `timeline-item ${idx % 2 === 0 ? 'left' : 'right'} animate-on-scroll` },
+                                    h('div', { className: 'timeline-icon' }, h('i', { className: feature.icon })),
+                                    h('div', { className: 'timeline-content' },
+                                        h('h3', { className: 'fw-semibold' }, feature.title),
+                                        h('p', { className: 'text-secondary mb-0' }, feature.shortDesc)
+                                    )
+                                )
+                            ))
+                        )
+                    )
+                ),
+                h('section', { id: 'pricing', className: 'py-5 animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('h2', { className: 'section-title' }, 'Pricing'),
+                        h('p', { className: 'section-subtitle' }, 'Choose the plan that fits your dealership'),
+                        h('div', { className: 'pricing-grid row g-4' },
+                            pricingPlans.map((plan, idx) => (
+                                h('div', { className: 'col-lg-4 col-md-6', key: idx },
+                                    h('div', { className: 'pricing-box' },
+                                        h('p', { className: 'desc' }, plan.desc),
+                                        h('h3', {}, plan.name),
+                                        h('div', { className: 'price' },
+                                            h('span', {}, plan.price),
+                                            plan.price.includes('$') && h('span', { className: 'text-muted' }, '/month')
+                                        ),
+                                        h('ul', {}, plan.features.map(feature => h('li', {}, feature))),
+                                        h('a', { href: '/signup.html', className: 'pricing-cta' }, 'Start Your 14-Day Free Trial')
+                                    )
+                                )
+                            ))
+                        )
+                    )
+                ),
+                h('section', { id: 'reviews', className: 'py-5 bg-light animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('h2', { className: 'section-title' }, 'What Our Customers Say'),
+                        h('p', { className: 'section-subtitle' }, 'Real feedback from real users'),
+                        h('div', { className: 'reviews-wall row g-4' },
+                            reviews.map((review, idx) => (
+                                h('div', { className: `col-lg-4 col-md-6 review-item animate-on-scroll`, key: idx, style: { transitionDelay: `${idx * 0.1}s` } },
+                                    h('div', { className: 'review-card' },
+                                        h('div', { className: 'review-front' },
+                                            h('p', {}, `"${review.quote}"`),
+                                            h('strong', {}, `- ${review.author}`)
+                                        )
+                                    )
+                                )
+                            ))
+                        )
+                    )
+                ),
+                h('section', { id: 'faq', className: 'py-5 animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('h2', { className: 'section-title' }, 'Frequently Asked Questions'),
+                        h('p', { className: 'section-subtitle' }, 'Got questions? We’ve got answers.'),
+                        h('div', { className: 'faq-list' },
+                            faqs.map((faq, idx) => (
+                                h('div', { 
+                                    className: 'faq-item', 
+                                    onclick: (e) => { e.currentTarget.classList.toggle('active'); }
+                                },
+                                    h('div', { className: 'faq-question' },
+                                        h('span', {}, faq.question),
+                                        h('i', { className: 'fas fa-chevron-down' })
+                                    ),
+                                    h('div', { className: 'faq-answer' }, faq.answer.split('\n').map(line => h('p', {}, line)))
+                                )
+                            ))
+                        )
+                    )
+                ),
+                h('section', { id: 'contact', className: 'py-5 animate-on-scroll' },
+                    h('div', { className: 'container' },
+                        h('h2', { className: 'section-title' }, 'Contact Us'),
+                        h('div', { className: 'row g-4' },
+                            h('div', { className: 'col-md-6' },
+                                h('div', { className: 'sales-info d-flex align-items-center justify-content-center' },
+                                    h('div', { className: 'text-center' },
+                                        h('h3', { className: 'mb-4' }, 'Talk to Sales'),
+                                        h('div', { className: 'd-flex align-items-center justify-content-center mb-3' },
+                                            h('i', { className: 'fas fa-user-circle me-3', style: { fontSize: '3rem', color: 'var(--primary)' } })
+                                        ),
+                                        h('p', { className: 'sales-name fw-bold mb-2' }, 'Kyle LeSueur'),
+                                        h('p', { className: 'text-muted mb-2' }, '480.381.3855'),
+                                        h('a', { href: 'mailto:kyle@taptosign.com', className: 'sales-email text-primary' }, 'kyle@taptosign.com')
+                                    )
+                                )
+                            ),
+                            h('div', { className: 'col-md-6' },
+                                h('div', { className: 'contact-form' },
+                                    h(ContactForm)
+                                )
+                            )
+                        )
+                    )
+                ),
+                h('footer', {},
+                    h('div', { className: 'container text-center' },
+                        h('p', { className: 'text-muted mb-3' }, 'E-Sign with any DMS. Fast, secure, and compliant.'),
+                        h('small', { className: 'text-muted' }, `© ${currentYear} Tap to Sign. All rights reserved.`)
+                    )
+                )
+            );
+        };
+
+        
+        function attachScrollAnimations() {
+            const sections = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMainPage();
+        });
+    </script>
+</body>
+</html>
