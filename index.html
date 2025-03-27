@@ -655,16 +655,16 @@
         }
     
         .feature-page {
-            background: #FDFCFA; /* Soft beige */
+            background: #FDFCFA;
             min-height: 100vh;
-            color: #2D3748; /* Dark slate */
+            color: #2D3748;
             font-family: 'Inter', sans-serif;
         }
     
-        /* Hero Section */
+        /* Hero Section (Unchanged) */
         .feature-hero {
             padding: 6rem 0 4rem;
-            background: linear-gradient(to bottom right, #E6F0FA 0%, #B2E0E6 100%); /* Light blue gradient */
+            background: linear-gradient(to bottom right, #E6F0FA 0%, #B2E0E6 100%);
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
             position: relative;
@@ -683,67 +683,83 @@
         .hero-title {
             font-size: 3rem;
             font-weight: 700;
-            color: #2C5282; /* Teal blue */
+            color: #2C5282;
             margin-bottom: 1rem;
         }
     
         .hero-subtitle {
             font-size: 1.3rem;
-            color: #4A5568; /* Gray */
+            color: #4A5568;
             max-width: 700px;
             margin: 0 auto 2rem;
         }
     
         .hero-icon {
             font-size: 3.5rem;
-            color: #3182CE; /* Bright teal */
+            color: #3182CE;
             margin-top: 1rem;
             opacity: 0.9;
         }
     
-        /* Breakdown Section */
-        .feature-breakdown {
+        /* Info Section */
+        .feature-info {
             padding: 4rem 0;
+            background: #FFFFFF;
         }
     
-        .breakdown-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr; /* Text: 1 part, images: 1.5 parts */
-            gap: 3rem;
-            max-width: 1400px;
+        .info-content {
+            max-width: 900px;
             margin: 0 auto;
-            align-items: center; /* Center the entire right column vertically */
+            text-align: left;
         }
     
-        .breakdown-text {
-            padding: 1rem;
+        .info-title {
+            font-size: 2.2rem;
+            color: #2C5282;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
     
-        .breakdown-section {
-            margin-bottom: 2.5rem;
+        .info-description {
+            font-size: 1.1rem;
+            color: #4A5568;
+            line-height: 1.6;
+            margin-bottom: 2rem;
         }
     
-        .breakdown-section h2 {
-            font-size: 1.8rem;
+        .info-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto 2rem;
+        }
+    
+        .info-subtitle {
+            font-size: 1.6rem;
             color: #2C5282;
             margin-bottom: 1rem;
             font-weight: 600;
         }
     
-        .breakdown-section p, .breakdown-section ul {
-            font-size: 1.1rem;
-            color: #4A5568;
-            line-height: 1.7;
+        .info-benefits {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
         }
     
-        .breakdown-section ul li {
+        .info-benefits li {
+            font-size: 1.1rem;
+            color: #4A5568;
             position: relative;
             padding-left: 1.5rem;
             margin-bottom: 0.75rem;
         }
     
-        .breakdown-section ul li:before {
-            content: '\f058'; /* Checkmark circle from Font Awesome */
+        .info-benefits li:before {
+            content: '\f058';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             color: #3182CE;
@@ -751,62 +767,62 @@
             left: 0;
         }
     
-        .breakdown-image {
-            display: flex;
-            flex-direction: column; /* Stack images vertically */
-            gap: 2rem; /* Space between images */
-            justify-content: center; /* Center images within this container */
-            align-items: center; /* Center images horizontally within this container */
-            height: 100%; /* Ensure it fills the grid cell height for centering */
+        .info-how {
+            font-size: 1.1rem;
+            color: #4A5568;
+            line-height: 1.6;
         }
     
-        .breakdown-img {
-            width: 100%;
-            max-width: 600px; /* Wide as before */
-            height: auto; /* Natural height, no stretching */
-            border-radius: 15px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            display: block;
-        }
-    
-        /* Highlights Section */
-        .feature-highlights {
+        /* Snapshot Section */
+        .feature-snapshot {
             padding: 4rem 0;
-            background: #F7FAFC; /* Light gray */
+            background: #F7FAFC;
+            text-align: center;
         }
     
-        .highlights-title {
-            font-size: 2rem;
+        .snapshot-title {
+            font-size: 2.2rem;
             color: #2C5282;
-            text-align: center;
             margin-bottom: 2rem;
             font-weight: 600;
         }
     
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
+        .snapshot-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 900px;
             margin: 0 auto;
         }
     
-        .highlight-item {
-            overflow: hidden;
+        .snapshot-item {
+            flex: 1;
+            padding: 1rem;
+            background: #FFFFFF;
             border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
     
-        .highlight-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-    
-        .highlight-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
+        .snapshot-stat {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #3182CE;
             display: block;
+            margin-bottom: 0.5rem;
+        }
+    
+        .snapshot-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #2D3748;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    
+        .snapshot-item p {
+            font-size: 1rem;
+            color: #4A5568;
+            margin: 0;
         }
     
         /* CTA Section */
@@ -843,13 +859,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
     
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 767px) {
             .feature-hero {
                 padding: 4rem 0 3rem;
             }
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             .hero-subtitle {
                 font-size: 1.1rem;
@@ -857,72 +873,92 @@
             .hero-icon {
                 font-size: 2.5rem;
             }
-            .breakdown-grid {
-                grid-template-columns: 1fr; /* Stack on mobile */
-                gap: 2rem;
-                align-items: start; /* Reset to start on mobile for stacking */
+            .info-title {
+                font-size: 1.8rem;
             }
-            .breakdown-image {
-                margin-top: 2rem;
-                gap: 1.5rem; /* Slightly smaller gap on mobile */
-                justify-content: center;
-                height: auto; /* Natural height on mobile */
+            .info-description, .info-how, .info-benefits li {
+                font-size: 1rem;
             }
-            .breakdown-img {
-                max-width: 100%; /* Full width on mobile */
-                height: auto;
+            .info-subtitle {
+                font-size: 1.4rem;
             }
-            .highlights-grid {
-                grid-template-columns: 1fr;
+            .info-image {
+                max-width: 100%;
+            }
+            .snapshot-title {
+                font-size: 1.8rem;
+            }
+            .snapshot-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .snapshot-stat {
+                font-size: 2rem;
+            }
+            .snapshot-quote {
+                font-size: 1rem;
             }
             .cta-btn {
                 padding: 0.8rem 2rem;
                 font-size: 1rem;
             }
     
-            /* Mobile adjustments for Features section */
             .timeline {
-                max-width: 100%; /* Full width on mobile */
-                padding: 0 1rem; /* Add some padding */
+                max-width: 100%;
+                padding: 0 1rem;
             }
             .timeline::before {
-                display: none; /* Remove the vertical line on mobile */
+                display: none;
             }
             .timeline-item {
-                margin-bottom: 2.5rem; /* Increase spacing between items */
-                position: static; /* Remove positioning for stacking */
+                margin-bottom: 2.5rem;
+                position: static;
             }
             .timeline-item.left .timeline-content,
             .timeline-item.right .timeline-content {
-                width: 100%; /* Full width on mobile */
-                margin: 0; /* Remove side margins */
-                text-align: left; /* Align text left for consistency */
+                width: 100%;
+                margin: 0;
+                text-align: left;
             }
             .timeline-icon {
-                position: static; /* Remove absolute positioning */
-                margin: 0 auto 1rem; /* Center icon with bottom spacing */
-                transform: none; /* Reset transform */
+                position: static;
+                margin: 0 auto 1rem;
+                transform: none;
             }
             .timeline-item:hover .timeline-icon {
-                transform: scale(1.1) rotate(10deg); /* Keep hover effect */
+                transform: scale(1.1) rotate(10deg);
             }
             .timeline-content {
-    text-align: center;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.timeline-content h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.75rem;
-}
-.timeline-content p {
-    font-size: 0.95rem;
-    max-width: 100%; /* Ensure it doesn’t exceed container */
-    text-align: center; /* Explicitly center multi-line text */
-}
+                text-align: center;
+                padding: 0 1rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .timeline-content h3 {
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+            .timeline-content p {
+                font-size: 0.95rem;
+                max-width: 100%;
+                text-align: center;
+            }
         }
+
+        section {
+    padding-top: 80px; /* Matches navbar height + buffer */
+}
+
+/* Ensure feature page sections also get the offset */
+.feature-page section:not(.feature-hero) {
+    padding-top: 80px;
+}
+
+/* Keep hero sections as-is since they already have enough padding */
+.hero-section, .feature-hero {
+    padding-top: 4rem; /* Original value from your code */
+}
     </style>
 </head>
 <body>
@@ -994,15 +1030,20 @@
 };
 
 
-        const renderFeaturePage = (feature) => {
-    console.log('Starting renderFeaturePage for:', feature.title);
+const renderFeaturePage = (featureId) => {
+    console.log('Starting renderFeaturePage for featureId:', featureId);
     const app = document.getElementById('app');
     if (!app) {
         console.error('App container not found!');
-        return2
+        return;
     }
     console.log('App container found, clearing content');
-    
+    app.innerHTML = '';
+    const feature = features.find(f => f.id === featureId);
+    if (!feature) {
+        console.error('Feature not found for id:', featureId);
+        return;
+    }
     try {
         console.log('Rendering FeaturePage with feature:', feature);
         render(h(FeaturePage, { feature }), app);
@@ -1273,52 +1314,111 @@
                 ]
             }
         ];
-        const Navbar = () => (
-            h('header', { className: 'navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm' },
-                h('div', { className: 'container' },
-                    h('a', { className: 'navbar-brand', href: '#', onclick: (e) => { e.preventDefault(); renderMainPage(); } },
-                        h('img', { src: 'images/logo.png', alt: 'Tap to Sign', className: 'navbar-logo' })
+
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * Navbar component renders the navigation bar for the application.
+ * 
+ * The navbar is a fixed-top element with a shadow and includes the following features:
+ * - A brand logo that reloads the page on click.
+ * - A responsive navbar toggle button for collapsing the navigation links on smaller screens.
+ * - Navigation links for various sections like "How It Works", "Pricing", "Reviews", "FAQ", and "Contact".
+ * - A dropdown menu for "Features" that maps through available features and renders them as dropdown items.
+ * - Call-to-action buttons for "Login" and "Start Your 14-Day Free Trial" with distinct styles.
+ * 
+ * The component uses Bootstrap classes for styling and responsiveness, and React's `h` function for creating elements.
+ */
+
+/******  3d72d15b-24a7-4b7e-8613-9e97146de592  *******/
+const Navbar = () => {
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight || 60; // Default to 60px if not found
+            const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 20; // 20px buffer
+            window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+        }
+    };
+
+    return h('header', { className: 'navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm' },
+        h('div', { className: 'container' },
+            h('a', { className: 'navbar-brand', href: '', onclick: (e) => { e.preventDefault(); window.location.reload(); } },
+                h('img', { src: 'images/logo.png', alt: 'Tap to Sign', className: 'navbar-logo' })
+            ),
+            h('button', { className: 'navbar-toggler', type: 'button', 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' },
+                h('span', { className: 'navbar-toggler-icon' })
+            ),
+            h('div', { className: 'collapse navbar-collapse', id: 'navbarNav' },
+                h('ul', { className: 'navbar-nav ms-auto' },
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { 
+                            className: 'nav-link', 
+                            href: '#how-it-works', 
+                            onclick: (e) => { e.preventDefault(); scrollToSection('how-it-works'); } 
+                        }, 'How It Works')
                     ),
-                    h('button', { className: 'navbar-toggler', type: 'button', 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' },
-                        h('span', { className: 'navbar-toggler-icon' })
-                    ),
-                    h('div', { className: 'collapse navbar-collapse', id: 'navbarNav' },
-                        h('ul', { className: 'navbar-nav ms-auto' },
-                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#how-it-works' }, 'How It Works')),
-                            h('li', { className: 'nav-item dropdown' },
-                                h('a', { className: 'nav-link dropdown-toggle', href: '#', id: 'featuresDropdown', 'data-bs-toggle': 'dropdown' }, 'Features'),
-                                h('ul', { className: 'dropdown-menu' },
-                                    features.map(feature => (
-                                        h('li', {},
-                                        h('a', { 
-                                            className: 'dropdown-item', 
-                                            href: '#',
-                                            onclick: (e) => { 
-                                                e.preventDefault(); 
-                                                console.log(`Navigating to feature: ${feature.title}`); 
-                                                renderFeaturePage(feature); 
-                                            } 
-                                        }, feature.title)
-                                        )
-                                    ))
+                    h('li', { className: 'nav-item dropdown' },
+                        h('a', { className: 'nav-link dropdown-toggle', href: '#', id: 'featuresDropdown', 'data-bs-toggle': 'dropdown' }, 'Features'),
+                        h('ul', { className: 'dropdown-menu' },
+                            features.map(feature => (
+                                h('li', {},
+                                    h('a', { 
+                                        className: 'dropdown-item', 
+                                        href: '#',
+                                        onclick: (e) => { 
+                                            e.preventDefault(); 
+                                            console.log(`Navigating to feature: ${feature.title}`); 
+                                            renderFeaturePage(feature.id); // Changed to feature.id
+                                        } 
+                                    }, feature.title)
                                 )
-                            ),
-                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#pricing' }, 'Pricing')),
-                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#reviews' }, 'Reviews')),
-                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#faq' }, 'FAQ')),
-                            h('li', { className: 'nav-item' }, h('a', { className: 'nav-link', href: '#contact' }, 'Contact')),
-                            h('li', { className: 'nav-item' }, h('a', { className: 'btn btn-outline-primary rounded-pill px-4 ms-3', href: '/login.html' }, 'Login')),
-                            h('li', { className: 'nav-item' }, h('a', { className: 'btn btn-primary rounded-pill px-4 ms-3', href: '/signup.html' }, 'Start Your 14-Day Free Trial'))
+                            ))
                         )
+                    ),
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { 
+                            className: 'nav-link', 
+                            href: '#pricing', 
+                            onclick: (e) => { e.preventDefault(); scrollToSection('pricing'); } 
+                        }, 'Pricing')
+                    ),
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { 
+                            className: 'nav-link', 
+                            href: '#reviews', 
+                            onclick: (e) => { e.preventDefault(); scrollToSection('reviews'); } 
+                        }, 'Reviews')
+                    ),
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { 
+                            className: 'nav-link', 
+                            href: '#faq', 
+                            onclick: (e) => { e.preventDefault(); scrollToSection('faq'); } 
+                        }, 'FAQ')
+                    ),
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { 
+                            className: 'nav-link', 
+                            href: '#contact', 
+                            onclick: (e) => { e.preventDefault(); scrollToSection('contact'); } 
+                        }, 'Contact')
+                    ),
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { className: 'btn btn-outline-primary rounded-pill px-4 ms-3', href: '/login.html' }, 'Login')
+                    ),
+                    h('li', { className: 'nav-item' }, 
+                        h('a', { className: 'btn btn-primary rounded-pill px-4 ms-3', href: '/signup.html' }, 'Start Your 14-Day Free Trial')
                     )
                 )
             )
-        );
-
+        )
+    );
+};
         const FeaturePage = ({ feature }) => {
     console.log('FeaturePage rendering with feature:', feature);
     return h('div', { className: 'feature-page' },
         h(Navbar),
+        // Hero Section (Unchanged)
         h('section', { className: 'feature-hero' },
             h('div', { className: 'hero-content container' },
                 h('div', { className: 'hero-text' },
@@ -1328,58 +1428,57 @@
                 )
             )
         ),
-        h('section', { className: 'feature-breakdown container' },
-            h('div', { className: 'breakdown-grid' },
-                h('div', { className: 'breakdown-text' },
-                    h('div', { className: 'breakdown-section animate-fade' },
-                        h('h2', {}, 'Overview'),
-                        h('p', {}, feature.fullDesc || 'Learn how this feature enhances your workflow.')
+        // All You Need to Know Section (Info-Packed)
+        h('section', { className: 'feature-info' },
+            h('div', { className: 'container' },
+                h('div', { className: 'info-content animate-fade' },
+                    h('h2', { className: 'info-title' }, 'All You Need to Know'),
+                    h('p', { className: 'info-description' }, feature.fullDesc || 'No details available.'),
+                    feature.images && feature.images.length > 0 && h('img', { 
+                        src: feature.images[0], 
+                        alt: `${feature.title} Overview`, 
+                        className: 'info-image'
+                    }),
+                    h('h3', { className: 'info-subtitle' }, 'Why It’s a Win'),
+                    h('ul', { className: 'info-benefits' }, 
+                        feature.benefits.map(benefit => h('li', {}, benefit))
                     ),
-                    h('div', { className: 'breakdown-section animate-fade' },
-                        h('h2', {}, 'Key Benefits'),
-                        h('ul', {}, (feature.benefits || []).map(benefit => h('li', {}, benefit)))
-                    ),
-                    h('div', { className: 'breakdown-section animate-fade' },
-                        h('h2', {}, 'How It Works'),
-                        h('p', {}, feature.howItWorks || 'A simple, effective process.')
-                    )
-                ),
-                h('div', { className: 'breakdown-image' },
-                    feature.images && feature.images.length > 0 ? [
-                        h('img', { 
-                            src: feature.images[0], 
-                            alt: `${feature.title || 'Feature'} Highlight 1`, 
-                            className: 'breakdown-img'
-                        }),
-                        feature.images.length > 1 && h('img', { 
-                            src: feature.images[1], 
-                            alt: `${feature.title || 'Feature'} Highlight 2`, 
-                            className: 'breakdown-img'
-                        })
-                    ] : h('img', { 
-                        src: 'https://via.placeholder.com/400', 
-                        alt: 'Placeholder', 
-                        className: 'breakdown-img'
-                    })
+                    h('h3', { className: 'info-subtitle' }, 'How It Works'),
+                    h('p', { className: 'info-how' }, feature.howItWorks || 'Simple and effective.')
                 )
             )
         ),
-        h('section', { className: 'feature-highlights container' },
-            h('h2', { className: 'highlights-title' }, 'Visual Highlights'),
-            h('div', { className: 'highlights-grid' },
-                (feature.images || []).slice(2).map((img, idx) => (
-                    h('div', { className: 'highlight-item' },
-                        h('img', { src: img, alt: `${feature.title || 'Feature'} ${idx + 3}`, className: 'highlight-img' })
+        // Impact Snapshot Section (Creative, Dense)
+        h('section', { className: 'feature-snapshot' },
+            h('div', { className: 'container' },
+                h('h2', { className: 'snapshot-title' }, 'Impact Snapshot'),
+                h('div', { className: 'snapshot-content' },
+                    h('div', { className: 'snapshot-item' },
+                        h('span', { className: 'snapshot-stat' }, feature.id === 'e-sign-seconds' ? '10s' : '100%'),
+                        h('p', {}, feature.id === 'e-sign-seconds' ? 'Signing Speed' : 'Compliance Rate')
+                    ),
+                    h('div', { className: 'snapshot-item' },
+                        h('span', { className: 'snapshot-stat' }, feature.benefits.length),
+                        h('p', {}, 'Key Advantages')
+                    ),
+                    h('div', { className: 'snapshot-item' },
+                        h('span', { className: 'snapshot-quote' }, 
+                            feature.id === 'dmv-compliant' 
+                                ? '“Audit-proof!”' 
+                                : '“Deal-closing magic!”'
+                        ),
+                        h('p', {}, 'What Users Say')
                     )
-                ))
+                )
             )
         ),
-        h('section', { className: 'feature-cta container' },
-            h('a', { href: '#', className: 'cta-btn', onclick: (e) => { e.preventDefault(); renderMainPage(); } }, 'Back to Home')
+        h('section', { className: 'feature-cta' },
+            h('div', { className: 'container' },
+                h('a', { href: '#', className: 'cta-btn', onclick: (e) => { e.preventDefault(); renderMainPage(); } }, 'Back to Home')
+            )
         )
     );
 };
-
             
         const MainPage = () => {
             
@@ -1436,7 +1535,7 @@
                         )
                     )
                 ),
-                h('section', { id: 'how-it-works', className: 'py-5 animate-on-scroll' },
+                h('section', { id: 'how-it-works', className: 'py-5 animate-on-scroll mt-2' },
                     h('div', { className: 'container' },
                         h('h2', { className: 'section-title' }, 'How It Works'),
                         h('p', { className: 'section-subtitle' }, 'A simple three-step process to get you started'),
